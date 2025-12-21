@@ -35,6 +35,18 @@ public:
 		return this->executionTime;
 	}
 
+	string getName();
+
+	void setName(string name) {
+		if (name.length() <= MaxStringSize) {
+			this->name = name;
+		}
+		else
+		{
+			this->name = name.substr(0, MaxStringSize);
+		}
+	}
+
 	//Initilize both values to 0
 	inline void initWaitExecTime() {
 		this->waitingTime = 0;
@@ -62,9 +74,24 @@ public:
 
 	~RBNode();
 
+	bool isLeaf();
+
+	bool isFull();
+
+	bool isEmpty();
+
+	//Returns the position of the inserted process
+	//Insert process code relies on count being accurate, in future utilizations count should possibly be made as a private field.
+	int insertProcess(Process* process);
+
+	Process* extractProcess(int position);
+
 	Process* nodes[3];
 	RBNode* children[4];
+	RBNode* parent;
 	unsigned short count;
+	//Position of the black node
+	int blackPosition;
 };
 
 
@@ -79,7 +106,22 @@ public:
 		return instance;
 	}
 
-	
+	static void DestroyInstance() {
+		if (!instance) return;
+		
+		delete instance;
+		instance = nullptr;
+	}
+
+	Process* searchProcess(string name);
+
+	Process* searchProcess(Time waitingTime, Time execTime);
+
+	void insertProcess(Process* process);
+
+	void deleteProcess(Process* process);
+
+	void printTree(ostream& output);
 	
 protected:
 	//Forms an empty tree (SINGLETON)
@@ -89,6 +131,9 @@ protected:
 	~RBTree();
 
 private:
+	//Function is private to prevent splitting with a node that is not in the tree
+	void split(RBNode* node, Process* process);
+
 	RBNode* root;
 
 	static RBTree* instance;
@@ -121,6 +166,10 @@ Process::Process(string name, Time timeToComplete, Time maxWaitingTime)
 	}
 }
 
+string Process::getName() {
+	return this->name;
+}
+
 RBNode::RBNode() {
 	for (int i = 0; i < 3; i++) {
 		this->nodes[i] = nullptr;
@@ -131,12 +180,79 @@ RBNode::RBNode() {
 	}
 
 	this->count = 0;
+	this->blackPosition = 0;
+	this->parent = nullptr;
 }
 
 RBNode::~RBNode() {
 	for (int i = 0; i < 3; i++) {
 		if (nodes[i]) delete nodes[i];
 	}
+}
+
+int RBNode::insertProcess(Process* process) {
+	if (count >= 3) return -1;
+
+	int pos = 2;
+	for (int i = 0; i < 2; i++) {
+		if (!nodes[i] || nodes[i]->getWaitingTime() > process->getWaitingTime()) {
+			pos = i;
+			break;
+		}
+	}
+
+	if (nodes[pos]) {
+		children[count + 1] = children[count];
+		for (int i = count; i > pos; i--) {
+			nodes[i] = nodes[i - 1];
+			children[i] = children[i - 1];
+		}
+	}
+
+	nodes[pos] = process;
+	count++;
+
+	if (pos <= blackPosition && count == 2) blackPosition++;
+
+	return pos;
+}
+
+bool RBNode::isLeaf() {
+	for (int i = 0; i < 4; i++) {
+		if (this->children[i] != nullptr) return false;
+	}
+	return true;
+}
+
+//Other function has to update the black position
+Process* RBNode::extractProcess(int position) {
+	if (position < 0 && position > count - 1) return nullptr;
+	
+	Process* p = nodes[position];
+	nodes[position] = nullptr;
+	
+	for (int i = position; i < count - 1; i++) {
+		nodes[i] = nodes[i + 1];
+	}
+	
+	count--;
+	
+	if (blackPosition == position)
+		blackPosition = count;
+
+	return p;
+}
+
+bool RBNode::isFull() {
+	/*for (int i = 0; i < 3; i++) {
+		if (this->nodes[i] == nullptr) return false;
+	}
+	return true;*/
+	return count == 3;
+}
+
+bool RBNode::isEmpty() {
+	return count == 0;
 }
 
 RBTree* RBTree::instance = nullptr;
@@ -147,13 +263,216 @@ RBTree::RBTree() {
 
 RBTree::~RBTree() {
 	RBNode* curr = root;
+	queue<RBNode*> NodesQueue;
+	NodesQueue.push(curr);
+	while (!NodesQueue.empty()) {
+		curr = NodesQueue.front();
+		NodesQueue.pop();
+		for (int i = 0; i < 4; i++) {
+			if (curr->children[i] != nullptr) NodesQueue.push(curr->children[i]);
+		}
+		delete curr;
+	}
+}
 
-	while (curr != nullptr) {
+Process* RBTree::searchProcess(Time waitingTime, Time execTime) {
+	RBNode* curr = this->root;
 
+	while (curr) {
+		for (int i = 0; i < curr->count; i++) {
+
+			if (curr->nodes[i]->getWaitingTime() == waitingTime && curr->nodes[i]->getExecTime() == execTime) return curr->nodes[i];
+			
+		}
+
+		int j = 0;
+		for (j; j < 3; j++) {
+			if (!curr->nodes[j]) continue;
+
+			if (curr->nodes[j]->getWaitingTime() >= waitingTime) break;
+		}
+
+		if (curr->nodes[2] && curr->nodes[2]->getWaitingTime() < waitingTime) j++;
+
+		curr = curr->children[j];
+	}
+
+	return nullptr;
+}
+
+Process* RBTree::searchProcess(string name) {
+	RBNode* curr = this->root;
+	queue<RBNode*> Q;
+
+	if (curr) Q.push(curr);
+	
+	while (!Q.empty()) {
+		curr = Q.front();
+		Q.pop();
+
+		for (int i = 0; i < 3; i++) {
+			//if (!curr->nodes[i]) continue;
+
+			if (curr->nodes[i]->getName() == name) return curr->nodes[i];
+		}
+
+		for (int j = 0; j < 4; j++) {
+			if (curr->children[j]) Q.push(curr->children[j]);
+		}
+
+	}
+
+	return nullptr;
+}
+
+void RBTree::insertProcess(Process* process) {
+	if (!root) {
+		RBNode* node = new RBNode;
+		node->nodes[0] = process;
+		node->count++;
+		root = node;
+		return;
+	}
+
+	RBNode* curr = root;
+
+	while (!curr->isLeaf()) {
+		int j;
+		for (j = 0; j < 3; j++) {
+			if (curr->nodes[j]->getWaitingTime() >= process->getWaitingTime()) break;
+		}
+
+		if (curr->nodes[2] && curr->nodes[2]->getWaitingTime() < process->getWaitingTime()) j++;
+
+		curr = curr->children[j];
+	}
+
+	if (!curr->isFull()) {
+		curr->insertProcess(process);
+		return;
+	}
+
+	//SPLIT
+	RBTree::split(curr, process);
+
+}
+
+void RBTree::split(RBNode* node, Process* process) {
+	RBNode* toBeSplit = node;
+	RBNode* rightSibling = nullptr;
+	RBNode* leftChild = nullptr, *rightChild = nullptr;
+	Process* toInsert = process;
+
+	while (toBeSplit->isFull()) {
+		Process* middle = toBeSplit->nodes[1];
+		rightSibling = new RBNode;
+		
+		rightSibling->insertProcess(toBeSplit->nodes[2]);
+		rightSibling->children[0] = toBeSplit->children[2];
+		rightSibling->children[1] = toBeSplit->children[3];
+		
+
+		toBeSplit->nodes[1] = nullptr;
+		toBeSplit->nodes[2] = nullptr;
+		toBeSplit->children[2] = nullptr;
+		toBeSplit->children[3] = nullptr;
+
+		toBeSplit->count = 1;
+		toBeSplit->blackPosition = 0;
+
+		if (toInsert->getWaitingTime() <= middle->getWaitingTime()) {
+			int insertPos = toBeSplit->insertProcess(toInsert);
+			toBeSplit->children[insertPos] = leftChild;
+			toBeSplit->children[insertPos + 1] = rightChild;
+		}
+		else
+		{
+			int insertPos = rightSibling->insertProcess(toInsert);
+			rightSibling->children[insertPos] = leftChild;
+			rightSibling->children[insertPos + 1] = rightChild;
+		}
+
+		RBNode* parent = toBeSplit->parent;
+
+		if (!parent) {
+			parent = new RBNode;
+			parent->nodes[0] = middle;
+
+			parent->children[0] = toBeSplit;
+			parent->children[1] = rightSibling;
+			parent->count++;
+
+			toBeSplit->parent = parent;
+			rightSibling->parent = parent;
+			
+			this->root = parent;
+
+			break;
+		}
+
+		if (!parent->isFull()) {
+			int insertPos = parent->insertProcess(middle);
+			parent->children[insertPos] = toBeSplit;
+			parent->children[insertPos + 1] = rightSibling;
+			toBeSplit->parent = parent;
+			rightSibling->parent = parent;
+		}
+		else
+		{
+			toInsert = middle;
+			leftChild = toBeSplit;
+			rightChild = rightSibling;
+		}
+
+		toBeSplit = parent;
+	}
+}
+
+void RBTree::printTree(ostream& output) {
+	if (!root) return;
+
+	queue<RBNode*> tLevel;
+	
+	tLevel.push(root);
+
+	while (!tLevel.empty()) {
+		RBNode* node = tLevel.front();
+		queue<RBNode*> nLevel;
+		tLevel.pop();
+
+		output << "| ";
+		for (int i = 0; i < node->count; i++) {
+			if (node->nodes[i]) output << node->nodes[i]->getName();
+			if (i == node->blackPosition) output << "*";
+			output << " ";
+		}
+		output << " |";
+
+		for (int i = 0; i < 4; i++) {
+			if (node->children[i]) nLevel.push(node->children[i]);
+		}
+
+		if (tLevel.empty()) { 
+			tLevel = nLevel;
+			output << "\n";
+		}
 	}
 }
 
 int main() {
+	Process* p1 = new Process("A", 10, 10);
+	Process* p2 = new Process("B", 10, 10);
+	Process* p3 = new Process("C", 10, 10);
+	Process* p4 = new Process("D", 10, 10);
 	
+	RBTree* tree = RBTree::GetInstance();
+	tree->insertProcess(p1);
+	tree->insertProcess(p2);
+	tree->insertProcess(p3);
+	tree->insertProcess(p4);
+
+	//cout << node->nodes[0]->getWaitingTime() << " " << node->nodes[1]->getWaitingTime() << " ";
+	tree->printTree(cout);
+
 	return 0;
 }
