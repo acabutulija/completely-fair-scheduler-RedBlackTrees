@@ -119,9 +119,9 @@ public:
 
 	void insertProcess(Process* process);
 
-	void deleteProcess(Process* process);
-
 	void printTree(ostream& output);
+
+	Process* deleteProcess(Process* process);
 	
 protected:
 	//Forms an empty tree (SINGLETON)
@@ -133,6 +133,25 @@ protected:
 private:
 	//Function is private to prevent splitting with a node that is not in the tree
 	void split(RBNode* node, Process* process);
+
+	Process* deleteProcessLeaf(RBNode* node, int position);
+
+
+	//Help functions for deletion process. ChildIndex included to increase time.
+	RBNode* findRealBrother(RBNode* node, int childIndex);
+
+	void borrowOne(RBNode* to, RBNode* from, int childIndex);
+
+	void borrowTwo(RBNode* to, RBNode* from, int childIndex);
+
+	//Merges parent's id1 and id2 nodes
+	void merge(RBNode* parent, int id1, int id2);
+
+	int indexOfChild(RBNode* parent, RBNode* child);
+
+	RBNode* findPredecessor(RBNode* node, int pid);
+
+	RBNode* findSuccessor(RBNode* node, int pid);
 
 	RBNode* root;
 
@@ -224,7 +243,14 @@ bool RBNode::isLeaf() {
 	return true;
 }
 
-//Other function has to update the black position
+int RBTree::indexOfChild(RBNode* parent, RBNode* child) {
+	for (int i = 0; i < 4; i++) {
+		if (parent->children[i] == child) return i;
+	}
+	return -1;
+}
+
+//Other function has to update the black position if black node is removed
 Process* RBNode::extractProcess(int position) {
 	if (position < 0 && position > count - 1) return nullptr;
 	
@@ -237,8 +263,8 @@ Process* RBNode::extractProcess(int position) {
 	
 	count--;
 	
-	if (blackPosition == position)
-		blackPosition = count;
+	if (position < blackPosition)
+		blackPosition--;
 
 	return p;
 }
@@ -428,6 +454,8 @@ void RBTree::split(RBNode* node, Process* process) {
 	}
 }
 
+
+
 void RBTree::printTree(ostream& output) {
 	if (!root) return;
 
@@ -457,6 +485,253 @@ void RBTree::printTree(ostream& output) {
 			output << "\n";
 		}
 	}
+}
+
+void RBTree::borrowOne(RBNode* to, RBNode* from, int childIndex) {
+	RBNode* parent = to->parent;
+	
+	bool left;
+	int parentIndex;
+	
+	if (childIndex != 3 && parent->children[childIndex + 1] == from)
+		left = true;
+	else
+		left = false;
+
+	if (left) parentIndex = childIndex;
+	else parentIndex = childIndex - 1;
+
+	if (left) {
+		Process* borrowing = from->extractProcess(0);
+		to->insertProcess(parent->nodes[parentIndex]);
+		parent->nodes[parentIndex] = borrowing;
+		to->children[to->count] = from->children[0];
+		
+		for (int i = 0; i < 3; i++) {
+			from->children[i] = from->children[i + 1];
+		}
+		from->children[3] = nullptr;
+	}
+	else
+	{
+		Process* borrowing = from->extractProcess(1);
+		to->insertProcess(parent->nodes[parentIndex]);
+		parent->nodes[parentIndex] = borrowing;
+		to->children[0] = from->children[from->count];
+		from->children[from->count] = nullptr;
+	}
+}
+
+void RBTree::borrowTwo(RBNode* to, RBNode* from, int childIndex) {
+	RBNode* parent = to->parent;
+
+	bool left;
+	int parentIndex;
+
+	if (childIndex != 3 && parent->children[childIndex + 1] == from)
+		left = true;
+	else
+		left = false;
+
+	if (left) parentIndex = childIndex;
+	else parentIndex = childIndex - 1;
+
+	Process* borrowMiddle, *borrowSecond;
+
+	if (left) {
+		borrowMiddle = from->extractProcess(1);
+		borrowSecond = from->extractProcess(0);
+
+
+		to->insertProcess(parent->nodes[parentIndex]);
+		to->insertProcess(borrowSecond);
+		parent->nodes[parentIndex] = borrowMiddle;
+		to->children[1] = from->children[0];
+		to->children[2] = from->children[1];
+
+		for (int i = 0; i < 2; i++) {
+			from->children[i] = from->children[i + 1];
+			from->children[i + 1] = from->children[i + 2];
+		}
+		from->children[2] = nullptr;
+		from->children[3] = nullptr;
+	}
+	else
+	{
+		borrowSecond = from->extractProcess(2);
+		borrowMiddle = from->extractProcess(1);
+
+		to->insertProcess(parent->nodes[parentIndex]);
+		to->insertProcess(borrowSecond);
+		parent->nodes[parentIndex] = borrowMiddle;
+		to->children[0] = from->children[2];
+		to->children[1] = from->children[3];
+		from->children[2] = nullptr;
+		from->children[3] = nullptr;
+	}
+}
+
+void RBTree::merge(RBNode* parent, int id1, int id2) {
+	RBNode* child = parent->children[id1];
+	RBNode* sibling = parent->children[id2];
+
+	int parentId;
+	if (id1 < id2) parentId = id1;
+	else parentId = id2;
+
+	bool left = id1 < id2;
+
+	Process* parentProcess = parent->extractProcess(parentId);
+	Process* siblingProcess = sibling->extractProcess(0);
+
+	child->insertProcess(parentProcess);
+	child->insertProcess(siblingProcess);
+	
+	if (left) {
+		child->children[2] = sibling->children[1];
+		child->children[1] = sibling->children[0];
+
+		for (int i = parentId + 1; i < 3; i++) {
+			parent->children[i] = parent->children[i + 1];
+		}
+		parent->children[3] = nullptr;
+
+	}
+	else
+	{
+		child->children[0] = sibling->children[0];
+		child->children[1] = sibling->children[1];
+
+		for (int i = parentId; i < 3; i++) {
+			parent->children[i] = parent->children[i + 1];
+		}
+		parent->children[3] = nullptr;
+	}
+
+	delete sibling;
+}
+
+Process* RBTree::deleteProcessLeaf(RBNode* node, int position) {
+	//Red leaf
+	if (node->blackPosition != position) {
+		Process* p = node->extractProcess(position);
+		return p;
+	}
+
+	//Black leaf
+	Process* p = node->extractProcess(position);
+	if (node->count > 0) {
+		node->blackPosition = node->count - 1;
+		return p;
+	}
+
+	//Borrow from real brother
+	while (node->count == 0) {
+
+		RBNode* parent = node->parent;
+		//If process is leaf we dont have from who to borrow
+		if (!parent) return p;
+
+		int childIndex = -1;
+		for (int i = 0; i < 4; i++) {
+			if (parent->children[i] == node) {
+				childIndex = i;
+				break;
+			}
+		}
+
+		RBNode* sibling = findRealBrother(node, childIndex);
+
+		if (sibling && sibling->count == 2)
+		{
+			borrowOne(node, sibling, childIndex);
+			return p;
+		}
+
+		if (sibling && sibling->count == 3) {
+			borrowTwo(node, sibling, childIndex);
+			return p;
+		}
+
+		if (sibling) {
+			int realBroId = indexOfChild(parent, sibling);
+
+			merge(parent, childIndex, realBroId);
+
+			node = parent;
+			continue;
+		}
+		
+
+		//Non-real brother
+		if (childIndex != 2 && parent->children[childIndex + 1] != nullptr) sibling = parent->children[childIndex + 1];
+		else if (childIndex != 0) sibling = parent->children[childIndex - 1];
+
+		//Doesn't have a sibling
+		if (!sibling) return p;
+
+		//Borrow one from non-real brother
+		if (sibling && sibling->count == 2)
+		{
+			borrowOne(node, sibling, childIndex);
+			return p;
+		}
+
+		//Borrow two from non-real brother
+		if (sibling && sibling->count == 3) {
+			borrowTwo(node, sibling, childIndex);
+			return p;
+		}
+
+		int siblingId = indexOfChild(parent, sibling);
+
+		merge(parent, childIndex, siblingId);
+		
+
+		node = parent;
+
+	}
+
+	return p;
+}
+
+RBNode* RBTree::findRealBrother(RBNode* node, int childIndex) {
+	RBNode* realBrother = nullptr;
+	RBNode* parent = node->parent;
+
+	if (!parent) return nullptr;
+	
+	bool left = childIndex % 2;
+
+	if (left) realBrother = parent->children[childIndex + 1];
+	else realBrother = parent->children[childIndex - 1];
+
+	if (parent->count == 2) {
+		if ((childIndex / 2) == parent->blackPosition) return nullptr;
+	}
+
+	return realBrother;
+}
+
+RBNode* RBTree::findSuccessor(RBNode* node, int pid) {
+	
+	RBNode* curr = node->children[pid + 1];
+
+	while (curr && !curr->isLeaf()) {
+		curr = curr->children[0];
+	}
+
+	return curr;
+}
+
+RBNode* RBTree::findPredecessor(RBNode* node, int pid) {
+	RBNode* curr = node->children[pid];
+
+	while (curr && !curr->isLeaf()) {
+		curr = curr->children[curr->count];
+	}
+
+	return curr;
 }
 
 int main() {
