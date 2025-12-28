@@ -1,7 +1,9 @@
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 #include <fstream>
 #include <queue>
+#include<sstream>
+#include <stack>
 using namespace std;
 
 //Class declaraction
@@ -80,6 +82,8 @@ public:
 
 	bool isEmpty();
 
+	string toString();
+
 	//Returns the position of the inserted process
 	//Insert process code relies on count being accurate, in future utilizations count should possibly be made as a private field.
 	int insertProcess(Process* process);
@@ -119,9 +123,13 @@ public:
 
 	void insertProcess(Process* process);
 
-	void printTree(ostream& output);
+	void printTreeHorizontal(ostream& output);
 
-	Process* deleteProcess(Process* process);
+	Process* removeProcess(RBNode* node, int id);
+
+	void printTreeVertical(ostream& output);
+
+	void printTreeRedBlack(ostream& output);
 	
 protected:
 	//Forms an empty tree (SINGLETON)
@@ -456,7 +464,7 @@ void RBTree::split(RBNode* node, Process* process) {
 
 
 
-void RBTree::printTree(ostream& output) {
+void RBTree::printTreeHorizontal(ostream& output) {
 	if (!root) return;
 
 	queue<RBNode*> tLevel;
@@ -485,6 +493,27 @@ void RBTree::printTree(ostream& output) {
 			output << "\n";
 		}
 	}
+}
+
+Process* RBTree::removeProcess(RBNode* node, int id) {
+	if (!node->isLeaf()) {
+		RBNode* replacement = findSuccessor(node, id);
+		int replacementId = 0;
+		
+		if (!replacement) {
+			replacement = findPredecessor(node, id);
+			replacementId = replacement->count - 1;
+		}
+
+		Process* forDeletion = node->nodes[id];
+		node->nodes[id] = replacement->nodes[replacementId];
+		replacement->nodes[replacementId] = forDeletion;
+
+		return deleteProcessLeaf(replacement, replacementId);
+
+	}
+
+	return deleteProcessLeaf(node, id);
 }
 
 void RBTree::borrowOne(RBNode* to, RBNode* from, int childIndex) {
@@ -734,6 +763,195 @@ RBNode* RBTree::findPredecessor(RBNode* node, int pid) {
 	return curr;
 }
 
+
+
+string RBNode::toString() {
+	string output = "";
+
+	for (int i = 0; i < this->count; i++) {
+		Process* p = this->nodes[i];
+		output += p->getName() + '\n';
+		output += "Wait time: " + to_string(p->getWaitingTime()) + '\n';
+		output += "Exec time: " + to_string(p->getExecTime()) + '\n';
+	}
+	
+	output.pop_back();
+
+	return output;
+}
+
+struct NodePadding {
+	RBNode* node;
+	int paddingAmount;
+	string numbering;
+
+
+	NodePadding(RBNode* node, int paddingAmount, string numbering) {
+		this->node = node;
+		this->paddingAmount = paddingAmount;
+		this->numbering = numbering;
+
+	}
+};
+
+void RBTree::printTreeVertical(ostream& output) {
+	NodePadding rootPadding = NodePadding(root, 0, "");
+	string outputString = "";
+	int tabSize = 3;
+
+
+	stack<NodePadding> outputStack;
+	outputStack.push(rootPadding);
+
+	while (!outputStack.empty()) {
+		NodePadding next = outputStack.top();
+		outputStack.pop();
+
+		//outputString += next.padding + next.node->toString() + '\n';
+		RBNode* node = next.node;
+
+		string outputNode = "";
+		for (int i = 0; i < node->count; i++) {
+			Process* p = node->nodes[i];
+			if (i == 0) {
+				outputNode += string(next.paddingAmount, ' ') + next.numbering;
+			}
+			else
+			{
+				outputNode += string(next.paddingAmount + next.numbering.length(), ' ');
+			}
+			
+			if (node->blackPosition != i && output.rdbuf() == cout.rdbuf()) outputNode += "\033[31m";
+
+			outputNode += p->getName();
+
+			if (node->blackPosition != i && output.rdbuf() == cout.rdbuf()) outputNode += "\033[0m";
+
+			if (node->blackPosition == i && output.rdbuf() != cout.rdbuf()) outputNode += " (BLK)";
+
+			outputNode += '\n';
+
+			outputNode += string(next.paddingAmount + next.numbering.length(), ' ') + "Wait time: " + to_string(p->getWaitingTime()) + '\n';
+
+			outputNode += string(next.paddingAmount + next.numbering.length(), ' ') + "Exec time: " + to_string(p->getExecTime()) + '\n';
+		}
+
+		outputString += outputNode;
+
+		for (int i = node->count; i >= 0; i--) {
+			
+			if (!node->children[i]) continue;
+
+			string childNumbering = next.numbering + to_string(i + 1) + '.';
+			RBNode* child = node->children[i];
+
+			
+			outputStack.push(NodePadding(child, next.paddingAmount + tabSize, childNumbering));
+		}
+	}
+
+	//outputString.pop_back();
+	output << outputString;
+}
+
+struct NodePaddingRB {
+	RBNode* node;
+	int paddingAmount;
+	string numbering;
+	int currentPos;
+
+
+	NodePaddingRB(RBNode* node, int paddingAmount, string numbering, int currentPos) {
+		this->node = node;
+		this->paddingAmount = paddingAmount;
+		this->numbering = numbering;
+		this->currentPos = currentPos;
+	}
+};
+
+void RBTree::printTreeRedBlack(ostream& output) {
+	stack<NodePaddingRB> outputStack;
+	outputStack.push(NodePaddingRB(root, 0, "", root->blackPosition));
+	string outputString = "";
+	int tabSize = 3;
+
+	while(!outputStack.empty()) {
+		NodePaddingRB next = outputStack.top();
+		outputStack.pop();
+
+		//outputString += next.padding + next.node->toString() + '\n';
+		RBNode* node = next.node;
+
+		string outputNode = "";
+		
+		Process* p = node->nodes[next.currentPos];
+		
+		outputNode += string(next.paddingAmount, ' ') + next.numbering;
+
+		if (node->blackPosition != next.currentPos && output.rdbuf() == cout.rdbuf()) outputNode += "\033[31m";
+
+		outputNode += p->getName();
+
+		if (node->blackPosition != next.currentPos && output.rdbuf() == cout.rdbuf()) outputNode += "\033[0m";
+
+		if (node->blackPosition == next.currentPos && output.rdbuf() != cout.rdbuf()) outputNode += " (BLK)";
+
+		outputNode += '\n';
+
+		outputNode += string(next.paddingAmount + next.numbering.length(), ' ') + "Wait time: " + to_string(p->getWaitingTime()) + '\n';
+
+		outputNode += string(next.paddingAmount + next.numbering.length(), ' ') + "Exec time: " + to_string(p->getExecTime()) + '\n';
+		
+
+		outputString += outputNode;
+
+		
+		RBNode* left, *right;
+		int leftPos = -1, rightPos = -1;
+
+		if (node->blackPosition == next.currentPos) {
+			if (node->blackPosition != 0 && node->nodes[node->blackPosition - 1]) {
+				left = node;
+				leftPos = node->blackPosition - 1;
+			}
+			else {
+				left = node->children[node->blackPosition];
+				if (left) leftPos = left->blackPosition;
+			}
+
+			if (node->nodes[node->blackPosition + 1]) {
+				right = node;
+				rightPos = node->blackPosition + 1;
+			}
+			else {
+				right = node->children[node->blackPosition + 1];
+				if (right) rightPos = right->blackPosition;
+			}
+		}
+		else
+		{
+			left = node->children[next.currentPos];
+			if (left) leftPos = left->blackPosition;
+
+			
+			right = node->children[next.currentPos + 1];
+			if (right) rightPos = right->blackPosition;
+			
+		}
+
+		string childNumberingLeft = next.numbering + to_string(1) + '.';
+		string childNumberingRight = next.numbering + to_string(2) + '.';
+		
+
+
+		if (right) outputStack.push(NodePaddingRB(right, next.paddingAmount + tabSize, childNumberingRight, rightPos));
+		if (left) outputStack.push(NodePaddingRB(left, next.paddingAmount + tabSize, childNumberingLeft, leftPos));
+		
+	}
+
+	output << outputString;
+}
+
 int main() {
 	Process* p1 = new Process("A", 10, 10);
 	Process* p2 = new Process("B", 10, 10);
@@ -741,13 +959,16 @@ int main() {
 	Process* p4 = new Process("D", 10, 10);
 	
 	RBTree* tree = RBTree::GetInstance();
+
+	ofstream file("output.txt");
 	tree->insertProcess(p1);
 	tree->insertProcess(p2);
 	tree->insertProcess(p3);
 	tree->insertProcess(p4);
 
 	//cout << node->nodes[0]->getWaitingTime() << " " << node->nodes[1]->getWaitingTime() << " ";
-	tree->printTree(cout);
-
+	tree->printTreeVertical(cout);
+	tree->printTreeRedBlack(cout);
+	tree->printTreeRedBlack(file);
 	return 0;
 }
