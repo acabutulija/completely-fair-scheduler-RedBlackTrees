@@ -1,0 +1,1191 @@
+Current simulationn time: 5
+Processing:A
+Wait time: 5
+Exec time: 5
+Max wait time: 60
+Time to complete: 90
+Status: Unfinished, returned to tree.
+Process tree:
+P (BLK)
+Wait time: 0
+Exec time: 0
+Max wait time: 30
+Time to complete: 16
+1.
+  H (BLK)
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 106
+  Time to complete: 48
+
+  L
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 95
+  Time to complete: 45
+  1.1.
+      D (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 209
+      Time to complete: 35
+
+      F
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 100
+      Time to complete: 48
+      1.1.1.
+            B (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 500
+            Time to complete: 46
+
+            C
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 98
+      1.1.2.
+            E (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 307
+            Time to complete: 47
+      1.1.3.
+            G (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 64
+            Time to complete: 7
+  1.2.
+      J (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 146
+      Time to complete: 13
+      1.2.1.
+            I (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 207
+            Time to complete: 49
+      1.2.2.
+            K (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 306
+            Time to complete: 46
+  1.3.
+      N (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 105
+      Time to complete: 8
+      1.3.1.
+            M (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 15
+      1.3.2.
+            O (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 358
+            Time to complete: 46
+2.
+  T (BLK)
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 100
+  Time to complete: 41
+  2.1.
+      N (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 105
+      Time to complete: 8
+      2.1.1.
+            M (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 15
+      2.1.2.
+            O (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 358
+            Time to complete: 46
+  2.2.
+      R (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 130
+      Time to complete: 40
+      2.2.1.
+            Q (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 30
+            Time to complete: 10
+      2.2.2.
+            S (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 45
+            Time to complete: 45
+
+            A
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 60
+            Time to complete: 90
+Current simulationn time: 10
+Processing:B
+Wait time: 5
+Exec time: 5
+Max wait time: 500
+Time to complete: 46
+Status: Unfinished, returned to tree.
+Process tree:
+P (BLK)
+Wait time: 0
+Exec time: 0
+Max wait time: 30
+Time to complete: 16
+1.
+  H (BLK)
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 106
+  Time to complete: 48
+
+  L
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 95
+  Time to complete: 45
+  1.1.
+      D (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 209
+      Time to complete: 35
+
+      F
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 100
+      Time to complete: 48
+      1.1.1.
+            C (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 98
+      1.1.2.
+            E (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 307
+            Time to complete: 47
+      1.1.3.
+            G (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 64
+            Time to complete: 7
+  1.2.
+      J (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 146
+      Time to complete: 13
+      1.2.1.
+            I (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 207
+            Time to complete: 49
+      1.2.2.
+            K (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 306
+            Time to complete: 46
+  1.3.
+      N (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 105
+      Time to complete: 8
+      1.3.1.
+            M (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 15
+      1.3.2.
+            O (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 358
+            Time to complete: 46
+2.
+  T (BLK)
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 100
+  Time to complete: 41
+  2.1.
+      N (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 105
+      Time to complete: 8
+      2.1.1.
+            M (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 15
+      2.1.2.
+            O (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 358
+            Time to complete: 46
+  2.2.
+      R (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 130
+      Time to complete: 40
+      2.2.1.
+            Q (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 30
+            Time to complete: 10
+      2.2.2.
+            S (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 45
+            Time to complete: 45
+
+            A
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 60
+            Time to complete: 90
+
+            B
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 500
+            Time to complete: 46
+Current simulationn time: 15
+Processing:C
+Wait time: 5
+Exec time: 5
+Max wait time: 150
+Time to complete: 98
+Status: Unfinished, returned to tree.
+Process tree:
+P (BLK)
+Wait time: 0
+Exec time: 0
+Max wait time: 30
+Time to complete: 16
+1.
+  H (BLK)
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 106
+  Time to complete: 48
+
+  L
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 95
+  Time to complete: 45
+  1.1.
+      F (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 100
+      Time to complete: 48
+      1.1.1.
+            D (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 209
+            Time to complete: 35
+
+            E
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 307
+            Time to complete: 47
+      1.1.2.
+            G (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 64
+            Time to complete: 7
+  1.2.
+      J (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 146
+      Time to complete: 13
+      1.2.1.
+            I (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 207
+            Time to complete: 49
+      1.2.2.
+            K (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 306
+            Time to complete: 46
+  1.3.
+      N (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 105
+      Time to complete: 8
+      1.3.1.
+            M (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 15
+      1.3.2.
+            O (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 358
+            Time to complete: 46
+2.
+  T (BLK)
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 100
+  Time to complete: 41
+  2.1.
+      N (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 105
+      Time to complete: 8
+      2.1.1.
+            M (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 15
+      2.1.2.
+            O (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 358
+            Time to complete: 46
+  2.2.
+      R (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 130
+      Time to complete: 40
+
+      A
+      Wait time: 5
+      Exec time: 5
+      Max wait time: 60
+      Time to complete: 90
+      2.2.1.
+            Q (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 30
+            Time to complete: 10
+      2.2.2.
+            S (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 45
+            Time to complete: 45
+      2.2.3.
+            B (BLK)
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 500
+            Time to complete: 46
+
+            C
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 150
+            Time to complete: 98
+Current simulationn time: 20
+Processing:D
+Wait time: 5
+Exec time: 5
+Max wait time: 209
+Time to complete: 35
+Status: Unfinished, returned to tree.
+Process tree:
+P (BLK)
+Wait time: 0
+Exec time: 0
+Max wait time: 30
+Time to complete: 16
+1.
+  H (BLK)
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 106
+  Time to complete: 48
+
+  L
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 95
+  Time to complete: 45
+  1.1.
+      F (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 100
+      Time to complete: 48
+      1.1.1.
+            E (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 307
+            Time to complete: 47
+      1.1.2.
+            G (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 64
+            Time to complete: 7
+  1.2.
+      J (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 146
+      Time to complete: 13
+      1.2.1.
+            I (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 207
+            Time to complete: 49
+      1.2.2.
+            K (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 306
+            Time to complete: 46
+  1.3.
+      N (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 105
+      Time to complete: 8
+      1.3.1.
+            M (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 15
+      1.3.2.
+            O (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 358
+            Time to complete: 46
+2.
+  T (BLK)
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 100
+  Time to complete: 41
+  2.1.
+      N (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 105
+      Time to complete: 8
+      2.1.1.
+            M (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 15
+      2.1.2.
+            O (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 358
+            Time to complete: 46
+  2.2.
+      R (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 130
+      Time to complete: 40
+
+      A
+      Wait time: 5
+      Exec time: 5
+      Max wait time: 60
+      Time to complete: 90
+      2.2.1.
+            Q (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 30
+            Time to complete: 10
+      2.2.2.
+            S (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 45
+            Time to complete: 45
+      2.2.3.
+            B (BLK)
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 500
+            Time to complete: 46
+
+            C
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 150
+            Time to complete: 98
+
+            D
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 209
+            Time to complete: 35
+Current simulationn time: 25
+Processing:E
+Wait time: 5
+Exec time: 5
+Max wait time: 307
+Time to complete: 47
+Status: Unfinished, returned to tree.
+Process tree:
+P (BLK)
+Wait time: 0
+Exec time: 0
+Max wait time: 30
+Time to complete: 16
+1.
+  L (BLK)
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 95
+  Time to complete: 45
+  1.1.
+      H (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 106
+      Time to complete: 48
+
+      J
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 146
+      Time to complete: 13
+      1.1.1.
+            F (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 100
+            Time to complete: 48
+
+            G
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 64
+            Time to complete: 7
+      1.1.2.
+            I (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 207
+            Time to complete: 49
+      1.1.3.
+            K (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 306
+            Time to complete: 46
+  1.2.
+      N (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 105
+      Time to complete: 8
+      1.2.1.
+            M (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 15
+      1.2.2.
+            O (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 358
+            Time to complete: 46
+2.
+  T (BLK)
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 100
+  Time to complete: 41
+  2.1.
+      N (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 105
+      Time to complete: 8
+      2.1.1.
+            M (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 15
+      2.1.2.
+            O (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 358
+            Time to complete: 46
+  2.2.
+      R (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 130
+      Time to complete: 40
+
+      A
+      Wait time: 5
+      Exec time: 5
+      Max wait time: 60
+      Time to complete: 90
+
+      C
+      Wait time: 5
+      Exec time: 5
+      Max wait time: 150
+      Time to complete: 98
+      2.2.1.
+            Q (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 30
+            Time to complete: 10
+      2.2.2.
+            S (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 45
+            Time to complete: 45
+      2.2.3.
+            B (BLK)
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 500
+            Time to complete: 46
+      2.2.4.
+            D (BLK)
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 209
+            Time to complete: 35
+
+            E
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 307
+            Time to complete: 47
+Current simulationn time: 30
+Processing:F
+Wait time: 5
+Exec time: 5
+Max wait time: 100
+Time to complete: 48
+Status: Unfinished, returned to tree.
+Process tree:
+P (BLK)
+Wait time: 0
+Exec time: 0
+Max wait time: 30
+Time to complete: 16
+1.
+  L (BLK)
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 95
+  Time to complete: 45
+  1.1.
+      H (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 106
+      Time to complete: 48
+
+      J
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 146
+      Time to complete: 13
+      1.1.1.
+            G (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 64
+            Time to complete: 7
+      1.1.2.
+            I (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 207
+            Time to complete: 49
+      1.1.3.
+            K (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 306
+            Time to complete: 46
+  1.2.
+      N (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 105
+      Time to complete: 8
+      1.2.1.
+            M (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 15
+      1.2.2.
+            O (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 358
+            Time to complete: 46
+2.
+  T (BLK)
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 100
+  Time to complete: 41
+  2.1.
+      N (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 105
+      Time to complete: 8
+      2.1.1.
+            M (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 15
+      2.1.2.
+            O (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 358
+            Time to complete: 46
+  2.2.
+      R (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 130
+      Time to complete: 40
+
+      A
+      Wait time: 5
+      Exec time: 5
+      Max wait time: 60
+      Time to complete: 90
+
+      C
+      Wait time: 5
+      Exec time: 5
+      Max wait time: 150
+      Time to complete: 98
+      2.2.1.
+            Q (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 30
+            Time to complete: 10
+      2.2.2.
+            S (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 45
+            Time to complete: 45
+      2.2.3.
+            B (BLK)
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 500
+            Time to complete: 46
+      2.2.4.
+            D (BLK)
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 209
+            Time to complete: 35
+
+            E
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 307
+            Time to complete: 47
+
+            F
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 100
+            Time to complete: 48
+Current simulationn time: 35
+Processing:G
+Wait time: 5
+Exec time: 5
+Max wait time: 64
+Time to complete: 7
+Status: Unfinished, returned to tree.
+Process tree:
+P (BLK)
+Wait time: 0
+Exec time: 0
+Max wait time: 30
+Time to complete: 16
+1.
+  L (BLK)
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 95
+  Time to complete: 45
+  1.1.
+      J (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 146
+      Time to complete: 13
+      1.1.1.
+            H (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 106
+            Time to complete: 48
+
+            I
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 207
+            Time to complete: 49
+      1.1.2.
+            K (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 306
+            Time to complete: 46
+  1.2.
+      N (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 105
+      Time to complete: 8
+      1.2.1.
+            M (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 15
+      1.2.2.
+            O (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 358
+            Time to complete: 46
+2.
+  T (BLK)
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 100
+  Time to complete: 41
+
+  A
+  Wait time: 5
+  Exec time: 5
+  Max wait time: 60
+  Time to complete: 90
+  2.1.
+      N (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 105
+      Time to complete: 8
+      2.1.1.
+            M (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 15
+      2.1.2.
+            O (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 358
+            Time to complete: 46
+  2.2.
+      R (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 130
+      Time to complete: 40
+      2.2.1.
+            Q (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 30
+            Time to complete: 10
+      2.2.2.
+            S (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 45
+            Time to complete: 45
+  2.3.
+      C (BLK)
+      Wait time: 5
+      Exec time: 5
+      Max wait time: 150
+      Time to complete: 98
+
+      E
+      Wait time: 5
+      Exec time: 5
+      Max wait time: 307
+      Time to complete: 47
+      2.3.1.
+            B (BLK)
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 500
+            Time to complete: 46
+      2.3.2.
+            D (BLK)
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 209
+            Time to complete: 35
+      2.3.3.
+            F (BLK)
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 100
+            Time to complete: 48
+
+            G
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 64
+            Time to complete: 7
+Current simulationn time: 40
+Processing:H
+Wait time: 5
+Exec time: 5
+Max wait time: 106
+Time to complete: 48
+Status: Unfinished, returned to tree.
+Process tree:
+P (BLK)
+Wait time: 0
+Exec time: 0
+Max wait time: 30
+Time to complete: 16
+1.
+  L (BLK)
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 95
+  Time to complete: 45
+  1.1.
+      J (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 146
+      Time to complete: 13
+      1.1.1.
+            I (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 207
+            Time to complete: 49
+      1.1.2.
+            K (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 306
+            Time to complete: 46
+  1.2.
+      N (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 105
+      Time to complete: 8
+      1.2.1.
+            M (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 15
+      1.2.2.
+            O (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 358
+            Time to complete: 46
+2.
+  T (BLK)
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 100
+  Time to complete: 41
+
+  A
+  Wait time: 5
+  Exec time: 5
+  Max wait time: 60
+  Time to complete: 90
+  2.1.
+      N (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 105
+      Time to complete: 8
+      2.1.1.
+            M (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 150
+            Time to complete: 15
+      2.1.2.
+            O (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 358
+            Time to complete: 46
+  2.2.
+      R (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 130
+      Time to complete: 40
+      2.2.1.
+            Q (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 30
+            Time to complete: 10
+      2.2.2.
+            S (BLK)
+            Wait time: 0
+            Exec time: 0
+            Max wait time: 45
+            Time to complete: 45
+  2.3.
+      C (BLK)
+      Wait time: 5
+      Exec time: 5
+      Max wait time: 150
+      Time to complete: 98
+
+      E
+      Wait time: 5
+      Exec time: 5
+      Max wait time: 307
+      Time to complete: 47
+      2.3.1.
+            B (BLK)
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 500
+            Time to complete: 46
+      2.3.2.
+            D (BLK)
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 209
+            Time to complete: 35
+      2.3.3.
+            F (BLK)
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 100
+            Time to complete: 48
+
+            G
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 64
+            Time to complete: 7
+
+            H
+            Wait time: 5
+            Exec time: 5
+            Max wait time: 106
+            Time to complete: 48
+Current simulationn time: 45
+Processing:I
+Wait time: 5
+Exec time: 5
+Max wait time: 207
+Time to complete: 49
+Status: Unfinished, returned to tree.
+Process tree:
+T (BLK)
+Wait time: 0
+Exec time: 0
+Max wait time: 100
+Time to complete: 41
+1.
+  P (BLK)
+  Wait time: 0
+  Exec time: 0
+  Max wait time: 30
+  Time to complete: 16
+  1.1.
+      L (BLK)
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 95
+      Time to complete: 45
+
+      N
+      Wait time: 0
+      Exec time: 0
+      Max wait time: 105
+      

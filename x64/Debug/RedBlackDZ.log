@@ -1,0 +1,3 @@
+﻿  asp2dz2.cpp
+C:\Users\acabu\Documents\ETF\asp2\RedBlackDZ\RedBlackDZ\asp2dz2.cpp(1031,59): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  RedBlackDZ.vcxproj -> C:\Users\acabu\Documents\ETF\asp2\RedBlackDZ\x64\Debug\RedBlackDZ.exe
